@@ -112,3 +112,18 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# db
+data/db/*
+
+# migration
+hospital_app/migrations/*
+gateway/migrations/*
+user/migrations/*
+
+#vscode
+.vscode
+
+# my temp file
+hospital_app/old
+docker-compose.*
