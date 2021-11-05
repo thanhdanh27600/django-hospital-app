@@ -1,10 +1,45 @@
 from random import randint
-from rest_framework import generics, viewsets, filters
+from django.http.response import JsonResponse
+from rest_framework import generics, views, viewsets, filters
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from hospital_app.models import *
 from hospital_app.serializers import *
 
 from django_filters.rest_framework import DjangoFilterBackend
+
+
+class PatientSetView(generics.ListAPIView):
+
+    def get(self, request, *arg, **kwarg):
+        patient_id = kwarg.get("id", None)
+        patient = Patient.objects.filter(number=patient_id)
+
+        comors = PatientComobidity.objects.filter(
+            patient_number=patient.get().number)
+        symtomps = Symptom.objects.filter(
+            patient_number=patient.get().number)
+        tests = TestInfomation.objects.filter(
+            patient_number=patient.get().number)
+        treatments = TestInfomation.objects.filter(
+            patient_number=patient.get().number)
+
+        result_patient = list(patient.values())[0]
+        result_comors = list(comors.values())
+        result_symtomps = list(symtomps.values())
+        result_tests = list(tests.values())
+        result_treatments = list(treatments.values())
+
+        return JsonResponse({"data":
+                             {
+                                 "patient": result_patient,
+                                 "comorbilities": result_comors,
+                                 "symtomps": result_symtomps,
+                                 "tests": result_tests,
+                                 "treatments": result_treatments
+                             }
+                             })
 
 
 class PersonnelView(viewsets.ModelViewSet):
@@ -19,6 +54,7 @@ class PersonnelView(viewsets.ModelViewSet):
 
 
 class PatientView(viewsets.ModelViewSet):
+    # permission_classes = [IsAuthenticated]
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
     filter_backends = [DjangoFilterBackend,
@@ -98,6 +134,7 @@ class ReceiveTreatmentView(viewsets.ModelViewSet):
     filterset_fields = ['patient_number', 'doctor_id', 'medication_code']
     search_fields = ['result', ]
     ordering_fields = ['start_date', 'end_date']
+
 
 class AdmittedView(viewsets.ModelViewSet):
     queryset = Admitted.objects.all()

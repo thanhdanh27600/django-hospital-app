@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     'user',
     'django_filters',
     'gateway',
-    'rest_framework',
-    'debug_toolbar'
+    'rest_framework'
 ]
 
 AUTH_USER_MODEL = "user.CustomUser"
@@ -53,7 +52,6 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware']
@@ -63,8 +61,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("gateway.authentication.Authentication", ),
     "EXCEPTION_HANDLER": "gateway.error_handler.custom_exception_handler",
     # 'DEFAULT_RENDERER_CLASSES': [
-    #     'rest_framework.renderers.AdminRenderer',
-    #     'rest_framework.renderers.JSONRenderer',
+    #     'rest_framework.renderers.AdminRenderer'
     # ],
 }
 

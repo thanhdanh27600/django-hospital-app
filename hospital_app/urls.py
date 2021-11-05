@@ -27,6 +27,7 @@ router.register(r'admitted', AdmittedView)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('patient-set/<int:id>', PatientSetView.as_view(), name="Patient view set"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

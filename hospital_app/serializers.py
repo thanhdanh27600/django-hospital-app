@@ -1,11 +1,9 @@
 from rest_framework import serializers
 from hospital_app.common import PERSONNEL_GET_TYPE
-
 from hospital_app.models import *
 
 
 class PatientSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = Patient
         fields = '__all__'
@@ -77,70 +75,69 @@ class PersonnelSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     personnel_id = serializers.CharField()
     type = serializers.CharField()
-    url = serializers.CharField(default=None, read_only = True)
-
+    url = serializers.CharField(default=None, read_only=True)
 
 
 class PatientComobiditySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model=PatientComobidity
-        fields='__all__'
+        model = PatientComobidity
+        fields = '__all__'
 
 
 class ReceiveTreatmentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model=ReceiveTreatment
-        fields='__all__'
+        model = ReceiveTreatment
+        fields = '__all__'
 
 
 class MedicationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model=Medication
-        fields='__all__'
+        model = Medication
+        fields = '__all__'
 
 
 class MedicationEffectSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model=MedicationEffect
-        fields='__all__'
+        model = MedicationEffect
+        fields = '__all__'
 
 
 class ReceiveTreatmentSerializer(serializers.HyperlinkedModelSerializer):
-    treatment_period=serializers.ReadOnlyField()
+    treatment_period = serializers.ReadOnlyField()
 
     class Meta:
-        model=ReceiveTreatment
-        fields='__all__'
+        model = ReceiveTreatment
+        fields = '__all__'
 
 
 class TestInfomationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model=TestInfomation
-        fields='__all__'
+        model = TestInfomation
+        fields = '__all__'
 
     def create(self, validated_data):
-        testInfo=TestInfomation.objects.create(**validated_data)
-        testInfo.test_id='{} - {}'.format(testInfo.type,
+        testInfo = TestInfomation.objects.create(**validated_data)
+        testInfo.test_id = '{} - {}'.format(testInfo.type,
                                             str(testInfo.patient_number))
         testInfo.save()
         return testInfo
 
 
 class SymptomSerializer(serializers.HyperlinkedModelSerializer):
-    duration=serializers.ReadOnlyField()
+    duration = serializers.ReadOnlyField()
 
     class Meta:
-        model=Symptom
-        fields='__all__'
+        model = Symptom
+        fields = '__all__'
 
     def create(self, validated_data):
-        symptom=Symptom.objects.create(**validated_data)
-        symptom.symptom_id='SYMPTOM{:05d} - {}'.format(
+        symptom = Symptom.objects.create(**validated_data)
+        symptom.symptom_id = 'SYMPTOM{:05d} - {}'.format(
             symptom.id, str(symptom.patient_number))
         symptom.save()
         return symptom
@@ -172,3 +169,13 @@ class AdmittedSerialzer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Admitted
         fields = '__all__'
+
+
+class PatientRelatedSerializer(serializers.HyperlinkedModelSerializer):
+
+    combor = PatientComobiditySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Patient
+        fields = ['patient_id', 'full_name', 'phone',
+                  'gender', 'address', 'identify_number', 'nurse_id', 'combor']

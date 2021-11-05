@@ -4,7 +4,7 @@ from datetime import datetime
 from rest_framework.authentication import BaseAuthentication
 from user.models import CustomUser
 
-
+DEBUG = 1
 class Authentication(BaseAuthentication):
 
     def authenticate(self, request):
@@ -23,7 +23,8 @@ class Authentication(BaseAuthentication):
     def validate_request(self, headers: list):
         authorization = headers.get("Authorization", None)
         if not authorization:
-            return None
+            if DEBUG:
+                return None
             raise Exception("You need to provide Authorization token")
         token = headers["Authorization"][7:]
         decoded_data = Authentication.verify_token(token)

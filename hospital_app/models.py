@@ -49,7 +49,8 @@ class Patient(models.Model):
     patient_id = models.CharField(
         max_length=50, editable=False, default=None, null=True)
     full_name = models.CharField(max_length=50)
-    phone = models.CharField(validators=[PHONE_REGEX], max_length=12)
+    phone = models.CharField(
+        validators=[PHONE_REGEX], max_length=12)
     gender = models.CharField(choices=GENDER_CHOICES,
                               max_length=12, default='NOT PROVIDED')
     address = models.TextField()
