@@ -35,11 +35,11 @@ class PatientSetView(generics.ListAPIView):
                              {
                                  "patient": result_patient,
                                  "comorbilities": result_comors,
-                                 "symtomps": result_symtomps,
+                                 "symptoms": result_symtomps,
                                  "tests": result_tests,
                                  "treatments": result_treatments
                              }
-                             })
+                             }, safe=False, json_dumps_params={'ensure_ascii': False})
 
 
 class PersonnelView(viewsets.ModelViewSet):
