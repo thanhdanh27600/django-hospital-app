@@ -15,7 +15,7 @@ class Personnel(models.Model):
     first_name = models.CharField(max_length=25, default=None)
     last_name = models.CharField(max_length=25, default=None)
     date_of_birth = models.DateField(
-        default=timezone.datetime(2000, 1, 1))
+        default=timezone.datetime(2000, 1, 1), null=True, blank=True)
     type = models.CharField(
         choices=PERSONNEL_TYPE_CHOICES,
         max_length=50, editable=False, default=None, null=True, blank=True)
@@ -73,7 +73,7 @@ class PatientComobidity(models.Model):
 class Building(models.Model):
     id = models.AutoField(primary_key=True, default=None)
     building_name = models.CharField(max_length=50)
-    number_of_floors = models.IntegerField()
+    number_of_floors = models.IntegerField(null=True, blank=True)
 
     def __str__(self) -> str:
         return self.building_name
@@ -83,8 +83,8 @@ class Room(models.Model):
     id = models.AutoField(primary_key=True, default=None)
     room_id = models.CharField(
         max_length=50, editable=False, default=None, null=True)
-    floor = models.IntegerField()
-    maximum_capacity = models.IntegerField()
+    floor = models.IntegerField(null=True, blank=True, default=0)
+    maximum_capacity = models.IntegerField(null=True, blank=True, default=20)
     room_type = models.CharField(choices=ROOM_TYPE_CHOICES, max_length=50)
     building_name = models.ForeignKey(
         Building, on_delete=models.SET_NULL, null=True)
@@ -94,7 +94,7 @@ class TestInfomation(models.Model):
     id = models.AutoField(primary_key=True, default=None)
     test_id = models.CharField(
         max_length=50, editable=False, default=None, null=True)
-    value = models.CharField(max_length=10)
+    value = models.CharField(max_length=10, null=True, blank=True)
     test_date = models.DateField(default=timezone.datetime(2000, 1, 1))
     positivity = models.BooleanField()
     type = models.CharField(choices=TEST_TYPE_CHOICES, max_length=50)
@@ -108,7 +108,7 @@ class TestInfomation(models.Model):
 class Medication(models.Model):
     # code = models.CharField(primary_key=True, max_length=10) -> id
     name = models.TextField(default=None)
-    price = models.FloatField(default=None)
+    price = models.FloatField(default=0.0)
     expiration_date = models.DateField(
         default=timezone.datetime(2000, 1, 1))
 
@@ -132,7 +132,7 @@ class ReceiveTreatment(models.Model):
         Doctor, on_delete=models.SET_NULL, null=True)
     start_date = models.DateField(default=timezone.datetime(2000, 1, 1))
     end_date = models.DateField(default=timezone.datetime(2000, 1, 1))
-    result = models.TextField()
+    result = models.TextField(default="Cured")
 
     @property
     def treatment_period(self):
@@ -161,9 +161,9 @@ class Admitted(models.Model):
         TestInfomation, on_delete=models.SET_NULL, null=True)
     staff_id = models.ForeignKey(
         Staff, on_delete=models.SET_NULL, null=True)
-    admidssion_date = models.DateField(
+    admission_date = models.DateField(
         default=timezone.datetime(2000, 1, 1))
-    location = models.TextField()
+    location = models.TextField(null=True, blank=True)
 
 
 class History(models.Model):
