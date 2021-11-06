@@ -26,14 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-va=#we16sw40gi*hgeu!%16u_r)5^@a)t11ns4rnxz+6xu=a$5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
                  '127.0.0.1', 'nameofapp.herokuapp.com']
 
 
 # Heroku Env
-SECRET_KEY = os.environ.get('SECRET_KEY')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
@@ -51,7 +50,7 @@ INSTALLED_APPS = [
     'django_filters',
     'gateway',
     'rest_framework',
-    'whitenoise.runserver_nostatic'
+    # 'whitenoise.runserver_nostatic'
 ]
 
 AUTH_USER_MODEL = "user.CustomUser"
@@ -64,7 +63,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware']
+    # 'whitenoise.middleware.WhiteNoiseMiddleware'
+    ]
 
 
 REST_FRAMEWORK = {

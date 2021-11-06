@@ -85,13 +85,6 @@ class PatientComobiditySerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
 
 
-class ReceiveTreatmentSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = ReceiveTreatment
-        fields = '__all__'
-
-
 class MedicationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:

@@ -108,7 +108,7 @@ class Medication(models.Model):
     # code = models.CharField(primary_key=True, max_length=10) -> id
     name = models.TextField(default=None)
     price = models.FloatField(default=None)
-    expiration_date = models.DateTimeField(default=timezone.now)
+    expiration_date = models.DateField(default=timezone.datetime(2000, 1, 1))
 
     def __str__(self) -> str:
         return f'{self.id} - {self.name}'
@@ -122,6 +122,7 @@ class MedicationEffect(models.Model):
 
 
 class ReceiveTreatment(models.Model):
+    id = models.AutoField(primary_key=True, default=None)
     medication_code = models.ForeignKey(
         Medication, on_delete=models.SET_NULL, null=True)
     patient_number = models.ForeignKey(

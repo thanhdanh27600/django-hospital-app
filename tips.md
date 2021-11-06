@@ -38,5 +38,5 @@ Seed data
 
 `python manage.py seed hospital_app --number=10`
 
-Reinstall all packages
-`pip install -r requirements.txt --ignore-installed`
+install all packages
+`pip install -r requirements.txt`
