@@ -125,18 +125,16 @@ class MedicationEffect(models.Model):
 
 class ReceiveTreatment(models.Model):
     medication_code = models.ForeignKey(
-        Medication, on_delete=models.SET_NULL, null=True)
+        Medication, on_delete=models.CASCADE)
     patient_number = models.ForeignKey(
-        Patient, on_delete=models.SET_NULL, null=True)
+        Patient, on_delete=models.CASCADE)
     doctor_id = models.ForeignKey(
-        Doctor, on_delete=models.SET_NULL, null=True)
+        Doctor, on_delete=models.CASCADE)
     start_date = models.DateField(default=timezone.datetime(2000, 1, 1).date())
     end_date = models.DateField(default=timezone.datetime(2000, 1, 1).date())
     result = models.TextField(default="Cured")
-
-    @property
-    def treatment_period(self):
-        return self.end_date - self.start_date
+    treatment_period = models.IntegerField(
+        editable=False, default=None, null=True)
 
 
 class Symptom(models.Model):
@@ -154,11 +152,11 @@ class Symptom(models.Model):
 
 class Admitted(models.Model):
     patient_number = models.ForeignKey(
-        Patient, on_delete=models.SET_NULL, null=True)
+        Patient, on_delete=models.CASCADE)
     test_id = models.ForeignKey(
-        TestInfomation, on_delete=models.SET_NULL, null=True)
+        TestInfomation, on_delete=models.CASCADE)
     staff_id = models.ForeignKey(
-        Staff, on_delete=models.SET_NULL, null=True)
+        Staff, on_delete=models.CASCADE)
     admission_date = models.DateField(
         default=timezone.datetime(2000, 1, 1).date())
     location = models.TextField(null=True, blank=True)
@@ -169,9 +167,9 @@ class Admitted(models.Model):
 class History(models.Model):
     id = models.AutoField(primary_key=True, default=None)
     patient_number = models.ForeignKey(
-        Patient, on_delete=models.CASCADE, default=None)
+        Patient, on_delete=models.CASCADE)
     room_id = models.ForeignKey(
-        Room, on_delete=models.CASCADE, default=None)
+        Room, on_delete=models.CASCADE)
     transfer_date = models.DateField(
         default=timezone.datetime(2000, 1, 1).date())
     destination_room = models.CharField(max_length=50, null=True, blank=True)

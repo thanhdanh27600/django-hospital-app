@@ -107,11 +107,17 @@ class MedicationEffectSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ReceiveTreatmentSerializer(serializers.HyperlinkedModelSerializer):
-    treatment_period = serializers.ReadOnlyField()
 
     class Meta:
         model = ReceiveTreatment
         fields = '__all__'
+
+    def create(self, validated_data):
+        recv_treatment = ReceiveTreatment.objects.create(**validated_data)
+        recv_treatment.treatment_period = (
+            recv_treatment.end_date - recv_treatment.start_date).days
+        recv_treatment.save()
+        return recv_treatment
 
 
 class TestInfomationSerializer(serializers.HyperlinkedModelSerializer):
