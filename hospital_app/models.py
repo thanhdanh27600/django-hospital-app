@@ -174,4 +174,4 @@ class History(models.Model):
         Room, on_delete=models.CASCADE, default=None)
     transfer_date = models.DateField(
         default=timezone.datetime(2000, 1, 1))
-    destination_room = models.CharField(max_length=50)
+    destination_room = models.CharField(max_length=50, null=True, blank=True)
