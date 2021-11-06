@@ -72,6 +72,14 @@ class NurseView(viewsets.ModelViewSet):
                        filters.SearchFilter]
     filterset_fields = ['type', ]
     search_fields = ['personnel_id', 'phone']
+    
+class VolunteerView(viewsets.ModelViewSet):
+    queryset = Volunteer.objects.all()
+    serializer_class = VolunteerSerializer
+    filter_backends = [DjangoFilterBackend,
+                       filters.SearchFilter]
+    filterset_fields = ['type', ]
+    search_fields = ['personnel_id', 'phone']
 
 
 class DoctorView(viewsets.ModelViewSet):

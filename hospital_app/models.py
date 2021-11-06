@@ -44,6 +44,9 @@ class Doctor(Personnel, models.Model):
 class HeadOfCamp(Personnel, models.Model):
     pass
 
+class Volunteer(Personnel, models.Model):
+    pass
+
 
 class Patient(models.Model):
     number = models.AutoField(primary_key=True, default=None)

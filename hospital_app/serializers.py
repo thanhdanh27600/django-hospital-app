@@ -43,6 +43,20 @@ class HeadOfCampSerializer(serializers.HyperlinkedModelSerializer):
         return head
 
 
+class VolunteerSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Volunteer
+        fields = '__all__'
+
+    def create(self, validated_data):
+        vol = Volunteer.objects.create(**validated_data)
+        vol.type = PERSONNEL_GET_TYPE['VOLUNTEER']
+        vol.personnel_id = 'VOLUNTEER{:05d}'.format(vol.id)
+        vol.save()
+        return vol
+
+
 class DoctorSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:

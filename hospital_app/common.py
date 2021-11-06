@@ -18,9 +18,11 @@ TEST_TYPE_CHOICES = [('PCR', 'PCR test'),
 PERSONNEL_TYPE_CHOICES = [('NURSE', 'Nurse'),
                           ('STAFF', 'Staff'),
                           ('DOCTOR', 'Doctor'),
-                          ('HEAD', 'Head of camp')]
-                          
+                          ('HEAD', 'Head of camp'),
+                          ('VOLUNTEER', 'Volunteer')]
+
 PERSONNEL_GET_TYPE = {"NURSE": "NURSE",
-                          "STAFF": "STAFF",
-                          "DOCTOR": "DOCTOR",
-                          "HEAD": "HEAD"}
+                      "STAFF": "STAFF",
+                      "DOCTOR": "DOCTOR",
+                      "HEAD": "HEAD",
+                      "VOLUNTEER": "VOLUNTEER"}
