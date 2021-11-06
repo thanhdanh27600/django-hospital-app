@@ -1,7 +1,7 @@
 from random import randint
 from django.http.response import JsonResponse
 from rest_framework import generics, views, viewsets, filters
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
 from hospital_app.models import *
@@ -11,6 +11,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 class PatientSetView(generics.ListAPIView):
+    permission_classes = [AllowAny]
 
     def get(self, request, *arg, **kwarg):
         patient_id = kwarg.get("id", None)
@@ -43,6 +44,8 @@ class PatientSetView(generics.ListAPIView):
 
 
 class PersonnelView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     serializer_class = PersonnelSerializer
 
     def get_queryset(self):
@@ -54,7 +57,8 @@ class PersonnelView(viewsets.ModelViewSet):
 
 
 class PatientView(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
     filter_backends = [DjangoFilterBackend,
@@ -65,6 +69,8 @@ class PatientView(viewsets.ModelViewSet):
 
 
 class NurseView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     queryset = Nurse.objects.all()
     serializer_class = NurseSerializer
     filter_backends = [DjangoFilterBackend,
@@ -74,6 +80,8 @@ class NurseView(viewsets.ModelViewSet):
 
 
 class DoctorView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
     filter_backends = [DjangoFilterBackend,
@@ -83,6 +91,8 @@ class DoctorView(viewsets.ModelViewSet):
 
 
 class StaffView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     queryset = Staff.objects.all()
     serializer_class = StaffSerializer
     filter_backends = [DjangoFilterBackend,
@@ -92,6 +102,8 @@ class StaffView(viewsets.ModelViewSet):
 
 
 class HeadOfCampView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     queryset = HeadOfCamp.objects.all()
     serializer_class = HeadOfCampSerializer
     filter_backends = [DjangoFilterBackend,
@@ -101,6 +113,8 @@ class HeadOfCampView(viewsets.ModelViewSet):
 
 
 class PatientComobidityView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     queryset = PatientComobidity.objects.all()
     serializer_class = PatientComobiditySerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
@@ -109,6 +123,8 @@ class PatientComobidityView(viewsets.ModelViewSet):
 
 
 class MedicationView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     queryset = Medication.objects.all()
     serializer_class = MedicationSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
@@ -117,6 +133,8 @@ class MedicationView(viewsets.ModelViewSet):
 
 
 class MedicationEffectView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     queryset = MedicationEffect.objects.all()
     serializer_class = MedicationEffectSerializer
     filter_backends = [DjangoFilterBackend,
@@ -127,6 +145,8 @@ class MedicationEffectView(viewsets.ModelViewSet):
 
 
 class ReceiveTreatmentView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     queryset = ReceiveTreatment.objects.all()
     serializer_class = ReceiveTreatmentSerializer
     filter_backends = [DjangoFilterBackend,
@@ -137,6 +157,8 @@ class ReceiveTreatmentView(viewsets.ModelViewSet):
 
 
 class AdmittedView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     queryset = Admitted.objects.all()
     serializer_class = AdmittedSerialzer
     filter_backends = [DjangoFilterBackend,
@@ -147,6 +169,8 @@ class AdmittedView(viewsets.ModelViewSet):
 
 
 class TestInfomationView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     serializer_class = TestInfomationSerializer
     queryset = TestInfomation.objects.all()
     filter_backends = [DjangoFilterBackend,
@@ -157,6 +181,8 @@ class TestInfomationView(viewsets.ModelViewSet):
 
 
 class SymptomView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     serializer_class = SymptomSerializer
     queryset = Symptom.objects.all()
     filter_backends = [DjangoFilterBackend,
@@ -167,6 +193,8 @@ class SymptomView(viewsets.ModelViewSet):
 
 
 class BuildingView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     queryset = Building.objects.all()
     serializer_class = BuildingSerializer
     filter_backends = [filters.SearchFilter]
@@ -174,6 +202,8 @@ class BuildingView(viewsets.ModelViewSet):
 
 
 class RoomView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]

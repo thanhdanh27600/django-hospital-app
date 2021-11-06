@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +26,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-va=#we16sw40gi*hgeu!%16u_r)5^@a)t11ns4rnxz+6xu=a$5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
+                 '127.0.0.1', 'nameofapp.herokuapp.com']
 
+
+# Heroku Env
+SECRET_KEY = os.environ.get('SECRET_KEY')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 # Application definition
 
@@ -42,7 +50,8 @@ INSTALLED_APPS = [
     'user',
     'django_filters',
     'gateway',
-    'rest_framework'
+    'rest_framework',
+    'whitenoise.runserver_nostatic'
 ]
 
 AUTH_USER_MODEL = "user.CustomUser"
@@ -54,15 +63,16 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware']
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware']
 
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("gateway.authentication.Authentication", ),
+    # "DEFAULT_AUTHENTICATION_CLASSES": ("gateway.authentication.Authentication", ),
     "EXCEPTION_HANDLER": "gateway.error_handler.custom_exception_handler",
-    # 'DEFAULT_RENDERER_CLASSES': [
-    #     'rest_framework.renderers.AdminRenderer'
-    # ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.AdminRenderer'
+    ],
 }
 
 
@@ -116,6 +126,9 @@ DATABASES = {
     }
 }
 
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'djongo',
@@ -161,6 +174,7 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static_collected'
