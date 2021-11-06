@@ -22,14 +22,14 @@ class PatientSetView(generics.ListAPIView):
             patient_number=patient.get().number)
         tests = TestInfomation.objects.filter(
             patient_number=patient.get().number)
-        treatments = TestInfomation.objects.filter(
+        treatments = ReceiveTreatment.objects.filter(
             patient_number=patient.get().number)
 
         result_patient = list(patient.values())[0]
         result_comors = list(comors.values())
         result_symtomps = list(symtomps.values())
         result_tests = list(tests.values())
-        result_treatments = list(treatments.values())
+        result_treatments = list(treatments)
 
         return JsonResponse({"data":
                              {

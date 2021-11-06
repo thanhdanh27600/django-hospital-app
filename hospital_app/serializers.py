@@ -129,8 +129,6 @@ class TestInfomationSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SymptomSerializer(serializers.HyperlinkedModelSerializer):
-    duration = serializers.ReadOnlyField()
-
     class Meta:
         model = Symptom
         fields = '__all__'
@@ -139,6 +137,7 @@ class SymptomSerializer(serializers.HyperlinkedModelSerializer):
         symptom = Symptom.objects.create(**validated_data)
         symptom.symptom_id = 'SYMPTOM{:05d} - {}'.format(
             symptom.id, str(symptom.patient_number))
+        symptom.duration = (symptom.end_date - symptom.start_date).days
         symptom.save()
         return symptom
 
