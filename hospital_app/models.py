@@ -14,7 +14,8 @@ class Personnel(models.Model):
                               max_length=12, default='NOT PROVIDED')
     first_name = models.CharField(max_length=25, default=None)
     last_name = models.CharField(max_length=25, default=None)
-    date_of_birth = models.DateTimeField(default=timezone.now)
+    date_of_birth = models.DateField(
+        default=timezone.datetime(2000, 1, 1))
     type = models.CharField(
         choices=PERSONNEL_TYPE_CHOICES,
         max_length=50, editable=False, default=None, null=True, blank=True)
@@ -94,7 +95,7 @@ class TestInfomation(models.Model):
     test_id = models.CharField(
         max_length=50, editable=False, default=None, null=True)
     value = models.CharField(max_length=10)
-    test_date = models.DateTimeField(default=timezone.now)
+    test_date = models.DateField(default=timezone.datetime(2000, 1, 1))
     positivity = models.BooleanField()
     type = models.CharField(choices=TEST_TYPE_CHOICES, max_length=50)
     condition = models.TextField()
@@ -108,7 +109,8 @@ class Medication(models.Model):
     # code = models.CharField(primary_key=True, max_length=10) -> id
     name = models.TextField(default=None)
     price = models.FloatField(default=None)
-    expiration_date = models.DateTimeField(default=timezone.now)
+    expiration_date = models.DateField(
+        default=timezone.datetime(2000, 1, 1))
 
     def __str__(self) -> str:
         return f'{self.id} - {self.name}'
@@ -128,8 +130,8 @@ class ReceiveTreatment(models.Model):
         Patient, on_delete=models.SET_NULL, null=True)
     doctor_id = models.ForeignKey(
         Doctor, on_delete=models.SET_NULL, null=True)
-    start_date = models.DateTimeField(default=timezone.now)
-    end_date = models.DateTimeField(default=timezone.now)
+    start_date = models.DateField(default=timezone.datetime(2000, 1, 1))
+    end_date = models.DateField(default=timezone.datetime(2000, 1, 1))
     result = models.TextField()
 
     @property
@@ -141,8 +143,8 @@ class Symptom(models.Model):
     id = models.AutoField(primary_key=True, default=None)
     symptom_id = models.CharField(
         max_length=50, editable=False, default=None, null=True)
-    start_date = models.DateTimeField(default=timezone.now)
-    end_date = models.DateTimeField(default=timezone.now)
+    start_date = models.DateField(default=timezone.datetime(2000, 1, 1))
+    end_date = models.DateField(default=timezone.datetime(2000, 1, 1))
     symptom_name = models.CharField(max_length=50)
     patient_number = models.ForeignKey(
         Patient, on_delete=models.CASCADE, default=None)
@@ -159,7 +161,8 @@ class Admitted(models.Model):
         TestInfomation, on_delete=models.SET_NULL, null=True)
     staff_id = models.ForeignKey(
         Staff, on_delete=models.SET_NULL, null=True)
-    admidssion_date = models.DateTimeField(default=timezone.now)
+    admidssion_date = models.DateField(
+        default=timezone.datetime(2000, 1, 1))
     location = models.TextField()
 
 
@@ -169,5 +172,6 @@ class History(models.Model):
         Patient, on_delete=models.CASCADE, default=None)
     room_id = models.ForeignKey(
         Room, on_delete=models.CASCADE, default=None)
-    transfer_date = models.DateTimeField(default=timezone.now)
+    transfer_date = models.DateField(
+        default=timezone.datetime(2000, 1, 1))
     destination_room = models.CharField(max_length=50)
