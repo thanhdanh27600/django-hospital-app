@@ -67,7 +67,7 @@ class PatientComobidity(models.Model):
     id = models.AutoField(primary_key=True, default=None)
     patient_number = models.ForeignKey(
         Patient, on_delete=models.CASCADE)
-    comobidity_name = models.CharField(max_length=50)
+    comorbidity_name = models.CharField(max_length=50)
 
 
 class Building(models.Model):

@@ -34,7 +34,7 @@ class PatientSetView(generics.ListAPIView):
         return JsonResponse({"data":
                              {
                                  "patient": result_patient,
-                                 "comorbilities": result_comors,
+                                 "comorbidities": result_comors,
                                  "symptoms": result_symtomps,
                                  "tests": result_tests,
                                  "treatments": result_treatments
@@ -105,7 +105,7 @@ class PatientComobidityView(viewsets.ModelViewSet):
     serializer_class = PatientComobiditySerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['patient_number', ]
-    search_fields = ['comobidity_name', ]
+    search_fields = ['comorbidity_name', ]
 
 
 class MedicationView(viewsets.ModelViewSet):
