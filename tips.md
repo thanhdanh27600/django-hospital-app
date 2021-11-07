@@ -26,6 +26,10 @@ Commit data models migration
 Apply migration
 `python manage.py migrate`
 
+Collect static files
+
+`python manage.py collectstatic`
+
 Show requirements (libraries installed in the activated environment)
 
 `pip freeze`
@@ -45,7 +49,9 @@ Production shell
 
 `heroku ps:restart -a quarantine-camp`
 
-`heroku ps:stop run.7036 -a quarantine-camp`
+`python manage.py collectstatic`
+
+`heroku ps:stop run.xxxx -a quarantine-camp`
 
 `heroku config -s | grep DATABASE_URL -a quarantine-camp`
 
