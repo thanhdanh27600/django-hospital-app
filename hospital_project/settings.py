@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'hospital_app',
     'user',
     'django_filters',
@@ -54,15 +55,17 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware']
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware', ]
 
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("gateway.authentication.Authentication", ),
+    # "DEFAULT_AUTHENTICATION_CLASSES": ("gateway.authentication.Authentication", ),
     "EXCEPTION_HANDLER": "gateway.error_handler.custom_exception_handler",
-    # 'DEFAULT_RENDERER_CLASSES': [
-    #     'rest_framework.renderers.AdminRenderer'
-    # ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.AdminRenderer'
+    ],
 }
 
 
@@ -168,3 +171,10 @@ STATIC_ROOT = BASE_DIR / 'static_collected'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',
+#     'http://127.0.0.1:3000'
+# ]
+
+CORS_ORIGIN_ALLOW_ALL = True

@@ -1,5 +1,6 @@
-{% extends "rest_framework/admin.html" %}
-{% load i18n admin_urls %}
+{% extends "rest_framework/apii.html" %}
+{% load i18n %}
+
 {% block branding %}
 <a class="navbar-brand" rel="nofollow" href="/patient">
     {% trans 'Patient' %}
@@ -13,11 +14,14 @@
 <a class="navbar-brand" rel="nofollow" href="/staff">
     {% trans 'Staff' %}
 </a>
+<a class="navbar-brand" rel="nofollow" href="/volunteer">
+    {% trans 'Volunteer' %}
+</a>
 <a class="navbar-brand" rel="nofollow" href="/head">
     {% trans 'Head of Camp' %}
 </a>
 <a class="navbar-brand" rel="nofollow" href="/patientcomo">
-    {% trans 'Comobidity' %}
+    {% trans 'Comorbidity' %}
 </a>
 <a class="navbar-brand" rel="nofollow" href="/symptom">
     {% trans 'Symptom' %}
@@ -43,37 +47,31 @@
 <a class="navbar-brand" rel="nofollow" href="/room">
     {% trans 'Room' %}
 </a>
-<button class="btn btn-primary" id="print-btn" rel="nofollow" href="/patient-set/18">
-    {% trans 'Print Report' %}
-</button>
+<a class="navbar-brand" rel="nofollow" href="/history">
+    {% trans 'History' %}
+</a>
+<a class="navbar-brand" rel="nofollow" href="/patient-set/1">
+    {% trans 'PRINT REPORT' %}
+</a>
 {% endblock %}
 
 {% block bootstrap_theme %}
 <link rel="stylesheet" href="https://bootswatch.com/3/lumen/bootstrap.min.css" type="text/css">
+<style>
+    select {
+        display: block;
+        width: 350px;
+        height: 50px;
+        padding: 7px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555555;
+        background-color: #ffffff;
+        background-image: none;
+        border: 1px solid #e7e7e7;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+</style>
 {% endblock %}
-
-
-{% block script %}
-<script>
-    const button = document.getElementById('print-btn');
-
-    button.addEventListener('click', async _ => {
-        try {
-            const response = await fetch('http://ptsv2.com/t/ig4fa-1636135983/post', {
-                method: 'post',
-                'content-type': 'application/json',
-                body: {
-                    "Hello": "hello"
-                }
-            });
-            console.log('Completed!', response);
-        } catch (err) {
-            console.error(`Error: ${err}`);
-        }
-    })
-</script>
-{% endblock %}
-
-
-
-{% block bootstrap_navbar_variant %}{% endblock %}

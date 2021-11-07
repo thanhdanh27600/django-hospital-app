@@ -1,7 +1,10 @@
-{% extends "rest_framework/api.html" %}
-{% load i18n %}
-
+{% extends "rest_framework/admin.html" %}
+{% load i18n admin_urls %}
+{% block title %}Quarantine Camp Database{% endblock %}
 {% block branding %}
+<a class="navbar-brand" rel="nofollow" href="/">
+    {% trans 'Home' %}
+</a>
 <a class="navbar-brand" rel="nofollow" href="/patient">
     {% trans 'Patient' %}
 </a>
@@ -21,7 +24,7 @@
     {% trans 'Head of Camp' %}
 </a>
 <a class="navbar-brand" rel="nofollow" href="/patientcomo">
-    {% trans 'Comorbidity' %}
+    {% trans 'Comobidity' %}
 </a>
 <a class="navbar-brand" rel="nofollow" href="/symptom">
     {% trans 'Symptom' %}
@@ -35,6 +38,9 @@
 <a class="navbar-brand" rel="nofollow" href="/admitted">
     {% trans 'Admitted' %}
 </a>
+<a class="navbar-brand" rel="nofollow" href="/history">
+    {% trans 'History' %}
+</a>
 <a class="navbar-brand" rel="nofollow" href="/receive-treatment">
     {% trans 'Treatment' %}
 </a>
@@ -47,12 +53,27 @@
 <a class="navbar-brand" rel="nofollow" href="/room">
     {% trans 'Room' %}
 </a>
-<a class="navbar-brand" rel="nofollow" href="/history">
-    {% trans 'History' %}
-</a>
-<a class="navbar-brand" rel="nofollow" href="/patient-set/1">
-    {% trans 'PRINT REPORT' %}
-</a>
+<div style="display: inline-flex; margin: 10px;">
+    <form onsubmit="return false;">
+        <div class="form-group">
+            <input type="number" class="form-control" id="patient-id" aria-describedby="patient-id"
+                placeholder="Patient id">
+            <button class="btn btn-primary" id="print-btn" rel="nofollow" style=" margin-top: 10px;" onclick="">
+                {% trans 'Print Report' %}
+            </button>
+            <script>
+                const button = document.getElementById('print-btn');
+
+                button.addEventListener('click', async _ => {
+                    const patientID = document.getElementById('patient-id')
+                    window.open(`http://localhost:3000/patient/${patientID.value}`);
+
+                })
+            </script>
+        </div>
+    </form>
+
+</div>
 {% endblock %}
 
 {% block bootstrap_theme %}

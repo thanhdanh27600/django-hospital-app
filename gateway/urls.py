@@ -8,5 +8,5 @@ urlpatterns = [
     # path('register', RegisterView.as_view()),
     # path('refresh', RefreshView.as_view()),
     # path('secured-info', GetSecuredInfo.as_view()),
-    # url(r'^gateway/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^gateway/', include('rest_framework.urls', namespace='rest_framework')),
 ]
