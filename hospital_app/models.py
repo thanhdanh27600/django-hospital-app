@@ -44,6 +44,7 @@ class Doctor(Personnel, models.Model):
 class HeadOfCamp(Personnel, models.Model):
     pass
 
+
 class Volunteer(Personnel, models.Model):
     pass
 
@@ -102,7 +103,7 @@ class TestInfomation(models.Model):
         max_length=50, editable=False, default=None, null=True)
     value = models.CharField(max_length=10, null=True, blank=True)
     test_date = models.DateField(default=timezone.datetime(2000, 1, 1).date())
-    positivity = models.BooleanField()
+    positivity = models.BooleanField(null=True, blank=True)
     type = models.CharField(choices=TEST_TYPE_CHOICES, max_length=50)
     condition = models.TextField()
     patient_number = models.ForeignKey(Patient, on_delete=models.CASCADE)
@@ -179,4 +180,3 @@ class History(models.Model):
     transfer_date = models.DateField(
         default=timezone.datetime(2000, 1, 1).date())
     destination_room = models.CharField(max_length=50, null=True, blank=True)
-
