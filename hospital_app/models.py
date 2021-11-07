@@ -92,6 +92,9 @@ class Room(models.Model):
     building_name = models.ForeignKey(
         Building, on_delete=models.SET_NULL, null=True)
 
+    def __str__(self) -> str:
+        return self.room_id
+
 
 class TestInfomation(models.Model):
     id = models.AutoField(primary_key=True, default=None)
@@ -176,3 +179,4 @@ class History(models.Model):
     transfer_date = models.DateField(
         default=timezone.datetime(2000, 1, 1).date())
     destination_room = models.CharField(max_length=50, null=True, blank=True)
+

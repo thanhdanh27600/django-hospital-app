@@ -24,13 +24,15 @@ class PatientSetView(generics.ListAPIView):
             patient_number=patient.get().number)
         treatments = ReceiveTreatment.objects.filter(
             patient_number=patient.get().number)
-        
+        histories = History.objects.filter(
+            patient_number=patient.get().number)
+
         result_patient = list(patient.values())[0]
         result_comors = list(comors.values())
         result_symtomps = list(symtomps.values())
         result_tests = list(tests.values())
         result_treatments = list(treatments.values())
-
+        result_histories = list(histories.values())
 
         return JsonResponse({"data":
                              {
@@ -38,7 +40,8 @@ class PatientSetView(generics.ListAPIView):
                                  "comorbidities": result_comors,
                                  "symptoms": result_symtomps,
                                  "tests": result_tests,
-                                 "treatments": result_treatments
+                                 "treatments": result_treatments,
+                                 "histories": result_histories
                              }
                              }, safe=False, json_dumps_params={'ensure_ascii': False})
 
@@ -72,7 +75,8 @@ class NurseView(viewsets.ModelViewSet):
                        filters.SearchFilter]
     filterset_fields = ['type', ]
     search_fields = ['personnel_id', 'phone']
-    
+
+
 class VolunteerView(viewsets.ModelViewSet):
     queryset = Volunteer.objects.all()
     serializer_class = VolunteerSerializer
@@ -188,3 +192,12 @@ class RoomView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['building_name', 'room_type']
     ordering_fields = ['maximum_capacity', 'room_id']
+
+
+class HistoryView(viewsets.ModelViewSet):
+    queryset = History.objects.all()
+    serializer_class = HistorySerializer
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filterset_fields = ['patient_number', 'room_id']
+    search_fields = ['destination_room', ]
+    ordering_fields = ['transfer_date']

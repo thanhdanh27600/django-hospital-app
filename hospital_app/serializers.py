@@ -188,6 +188,12 @@ class AdmittedSerialzer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Admitted
         fields = '__all__'
+        
+class HistorySerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = History
+        fields = '__all__'
 
 
 class PatientRelatedSerializer(serializers.HyperlinkedModelSerializer):
