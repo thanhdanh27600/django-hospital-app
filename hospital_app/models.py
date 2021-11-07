@@ -105,7 +105,7 @@ class TestInfomation(models.Model):
     test_date = models.DateField(default=timezone.datetime(2000, 1, 1).date())
     positivity = models.BooleanField(null=True, blank=True)
     type = models.CharField(choices=TEST_TYPE_CHOICES, max_length=50)
-    condition = models.TextField()
+    condition = models.TextField(null=True, blank=True)
     patient_number = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
