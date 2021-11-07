@@ -37,3 +37,7 @@ Save requirements to file
 Seed data
 
 `python manage.py seed hospital_app --number=10`
+
+Production shell
+
+`heroku run python manage.py migrate -a quarantine-camp`
