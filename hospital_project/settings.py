@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import dj_database_url
+import os
 from pathlib import Path
 from decouple import config
 
@@ -24,9 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-va=#we16sw40gi*hgeu!%16u_r)5^@a)t11ns4rnxz+6xu=a$5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
+                 '127.0.0.1', 'quarantine-camp.herokuapp.com']
 
 
 # Application definition
@@ -43,7 +46,8 @@ INSTALLED_APPS = [
     'user',
     'django_filters',
     'gateway',
-    'rest_framework'
+    'rest_framework',
+    'whitenoise.runserver_nostatic'
 ]
 
 AUTH_USER_MODEL = "user.CustomUser"
@@ -57,7 +61,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware', ]
+    'django.middleware.common.CommonMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+]
 
 
 REST_FRAMEWORK = {
@@ -119,6 +125,9 @@ DATABASES = {
     }
 }
 
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'djongo',
@@ -167,6 +176,9 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static_collected'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -178,3 +190,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+# production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
