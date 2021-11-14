@@ -102,9 +102,9 @@ class TestInfomation(models.Model):
         max_length=50, editable=False, default=None, null=True)
     value = models.CharField(max_length=10, null=True, blank=True)
     test_date = models.DateField(default=timezone.datetime(2000, 1, 1).date())
-    positivity = models.BooleanField()
+    positivity = models.BooleanField(null=True, blank=True)
     type = models.CharField(choices=TEST_TYPE_CHOICES, max_length=50)
-    condition = models.TextField()
+    condition = models.TextField(null=True, blank=True)
     patient_number = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
@@ -138,7 +138,7 @@ class ReceiveTreatment(models.Model):
         Doctor, on_delete=models.CASCADE)
     start_date = models.DateField(default=timezone.datetime(2000, 1, 1).date())
     end_date = models.DateField(default=timezone.datetime(2000, 1, 1).date())
-    result = models.TextField(default="Cured")
+    result = models.TextField(default="Cured", null=True, blank=True)
     treatment_period = models.IntegerField(
         editable=False, default=None, null=True)
 
