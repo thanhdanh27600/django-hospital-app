@@ -68,7 +68,7 @@ class PatientView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['nurse_id', ]
-    search_fields = ['identify_number', 'phone']
+    search_fields = ['full_name', 'phone']
     ordering_fields = ['patient_id']
 
 

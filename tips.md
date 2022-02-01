@@ -11,6 +11,10 @@ Create Django App
 
 `python manage.py startapp hello`
 
+Start Server
+
+`python manage.py runserver`
+
 Create Superuser
 
 `python manage.py createsuperuser`

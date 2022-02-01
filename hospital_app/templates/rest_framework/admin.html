@@ -63,10 +63,11 @@
             </button>
             <script>
                 const button = document.getElementById('print-btn');
-
+                const baseURLProd = 'https://quarantine-camp.web.app';
+                const baseURLDebug = 'http://localhost:3000'
                 button.addEventListener('click', async _ => {
                     const patientID = document.getElementById('patient-id')
-                    window.open(`https://quarantine-camp.web.app/?patient=${patientID.value}`);
+                    window.open(`${baseURLDebug}/?patient=${patientID.value}`);
 
                 })
             </script>
