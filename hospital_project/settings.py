@@ -71,7 +71,8 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "gateway.error_handler.custom_exception_handler",
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.AdminRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer'
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
